@@ -5,6 +5,7 @@
 
 #include "catch/catch.hpp"
 #include "string_formatter.h"
+#include "calendar.h"
 
 // Same as @ref string_format, but does not swallow errors and throws them instead.
 template<typename ...Args>
@@ -564,4 +565,95 @@ TEST_CASE( "string_formatter" )
     importet_test( 413, "00edcb5433          ", "%+ -0*.*x", 20, 10, 3989525555U );
     importet_test( 414, "1234ABCD            ", "% -+0*.*X", 20, 5, 305441741 );
     importet_test( 415, "00EDCB5433          ", "% -+0*.*X", 20, 10, 3989525555U );
+}
+
+//TEST_CASE( "to_string_approx1" )
+//{
+//    time_duration n = time_duration::from_turns(2000000000);
+//    for(int i=0; i < 15; ++i)
+//    {
+//        n = n + 100000000_turns;
+//        printf("i, n = %d, %d\n", i, to_turns<int>(n));
+//    }
+//}
+
+TEST_CASE( "to_string_approx2" )
+{
+    int a = 2000000000;
+    for(int i=0; i < 15; ++i)
+    {
+        a += 100000000;
+
+        std::string s1, s2;
+        printf("Approx = %d, %d, [%s] [%s]\n", i, a, s1.c_str(), s2.c_str());
+    }
+}
+
+TEST_CASE( "to_string_approx3" )
+{
+    unsigned int n = 2000000000;
+    for(unsigned int i=0; i < 15; ++i)
+    {
+        n = n + 100000000;
+        printf("i, n = %d, %d\n", i, n);
+    }
+}
+
+
+
+TEST_CASE( "to_string_approx" )
+{
+    //try {
+
+    {
+        //time_duration fire_age = time_duration::from_turns(1);
+        int a = 2000000000;
+        for(unsigned int i=0; i < 15; ++i)
+        {
+            //fire_age = fire_age * 10;
+            //a += 500000000;
+            a += 100000000;
+
+            // half-life inclusion
+           // int mod = 5 - 3;
+           // mod = std::max( mod, 0 );
+
+            //std::string s1 = to_string_approx( fire_age - fire_age * mod / 5 );
+            //std::string s2 = to_string_approx( fire_age + fire_age * mod / 5 );
+            std::string s1, s2;
+            //int a = to_turns<int>(fire_age);
+            //if (a < 0) {
+            //    printf("SKIPPED Approx = %d, %d, [%s] [%s]\n", i, a, s1.c_str(), s2.c_str());
+            //}
+            //else {
+                printf("Approx = %d, %d, [%s] [%s]\n", i, a, s1.c_str(), s2.c_str());
+           // }
+        }
+    }
+
+    {
+        int a = 2111222333;
+        printf("1 a = %d\n", a);
+        if (a < 0)
+            printf("1 a < 0! a = %d\n", a);
+
+        a = a*10;
+        printf("2 a = %d\n", a);
+        if (a < 0)
+            printf("2 a < 0! a = %d\n", a);
+    }
+
+    {
+        time_duration fire_age = time_duration::from_turns(2111222333);
+        int a = to_turns<int>(fire_age);
+        printf("3 a = %d\n", a);
+        if (fire_age < 0_turns)
+            printf("3 a < 0! a = %d\n", a);
+
+        fire_age = fire_age*10;
+        a = to_turns<int>(fire_age);
+        printf("4 a = %d\n", a);
+        if (fire_age < 0_turns)
+            printf("4 a < 0! a = %d\n", a);
+    }
 }
